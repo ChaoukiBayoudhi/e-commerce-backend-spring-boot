@@ -26,8 +26,11 @@ public class Product {
     private Long id;
     @NonNull  //L'attribut "label" est obligatoire
     @EqualsAndHashCode.Include //Label va être prise en consideration pour comparer deux produits
+    @Column(unique = true)
     private String label;
     @NonNull
+    @Column(unique = true,precision=3)
+    //price est une colonne sans repetition et avec 3 chiffres après la virgule
     private double price;
     @NonNull
     @EqualsAndHashCode.Include
@@ -36,6 +39,7 @@ public class Product {
     @EqualsAndHashCode.Include
     private LocalDate fabricationDate;
     private String description;
+    private int quantity;
     @Lob
     private byte[] photo;
 
