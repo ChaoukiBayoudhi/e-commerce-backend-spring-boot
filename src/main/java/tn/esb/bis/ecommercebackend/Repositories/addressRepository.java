@@ -1,4 +1,9 @@
 package tn.esb.bis.ecommercebackend.Repositories;
 
-public interface addressRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import tn.esb.bis.ecommercebackend.Domains.Address;
+
+@Repository
+public interface addressRepository extends JpaRepository<Address,Long> {
 }

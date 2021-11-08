@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,4 +28,6 @@ public class Provider {
     private String email;
     private String telephone;
     private String siteUrl;
+    @OneToMany(mappedBy="productProvider", cascade=CascadeType.ALL)
+    private List<Product> products = new ArrayList<>();
 }

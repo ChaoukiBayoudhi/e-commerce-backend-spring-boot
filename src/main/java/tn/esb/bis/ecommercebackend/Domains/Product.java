@@ -4,7 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -26,7 +27,7 @@ public class Product {
     private Long id;
     @NonNull  //L'attribut "label" est obligatoire
     @EqualsAndHashCode.Include //Label va être prise en consideration pour comparer deux produits
-    @Column(unique = true)
+    @Column(unique = true,length=100)
     private String label;
     @NonNull
     @Column(unique = true,precision=3)
@@ -42,5 +43,10 @@ public class Product {
     private int quantity;
     @Lob
     private byte[] photo;
+    @ManyToMany(mappedBy="products")
+    private List<Customer> customers=new ArrayList<>();//Le client qui ont acheté le produit
+    @ManyToOne
+    @JoinColumn(name="id_provider", referencedColumnName = "id")
+    private Provider productProvider;
 
 }

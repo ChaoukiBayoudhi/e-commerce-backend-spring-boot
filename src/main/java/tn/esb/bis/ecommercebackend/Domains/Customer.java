@@ -6,10 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import tn.esb.bis.ecommercebackend.Enumerations.CustomerType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -28,4 +27,16 @@ public class Customer {
     @NonNull
     private String lastName;
     private CustomerType type;
+    @ManyToMany
+    //création de la table association
+    @JoinTable(name="customerProducts",
+    joinColumns=@JoinColumn(name="idCustomer",referencedColumnName = "id"),
+            inverseJoinColumns=@JoinColumn(name="idProduct",referencedColumnName="id")
+    )
+    private List<Product> products=new ArrayList<>();//Les produits achetés par le customer
+    @OneToOne
+    @JoinColumn(name="idAddress",referencedColumnName="id")
+    //ceci est equivalent en SQL :
+    //constraint fk_1 foreignkey references Address(id)
+    private  Address customerAddress;
 }
