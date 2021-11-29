@@ -8,12 +8,13 @@ import tn.esb.bis.ecommercebackend.Domains.Product;
 import tn.esb.bis.ecommercebackend.Repositories.productRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
     @Autowired
     //faire le necessaire pour instancier l'objet poductRepos dans le serveur
-    //c'est l'injection
+    //c'est l'injection de dependences
     private productRepository  productRepos;
     public ResponseEntity<?> getAllProducts()
     {
@@ -23,5 +24,42 @@ public class ProductService {
                     .body("There is no products");
         return ResponseEntity.status(HttpStatus.OK)
                 .body(products);
+    }
+    //La méthode suivante est equivalente en sql à
+    //select * from Product where id=productId;
+    public ResponseEntity<?> getProductById(Long productId)
+    {
+        Optional<Product> result=productRepos.findById(productId);
+        if(result.isPresent())
+            return ResponseEntity.status(HttpStatus.OK)
+            .body(result.get());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Bad id value");
+    }
+
+    //en sql :
+    //Product p;
+    //insert into Product(label,price,....) values(p.label,p.price,...)
+    public ResponseEntity<?> addProduct(Product p)
+    {
+        List<Product> lstproducts=productRepos.findAll();
+        if(lstproducts.contains(p))
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+                                 .body("This Product already exists");
+        Product result=productRepos.save(p);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                             .body(result);
+    }
+
+    public ResponseEntity<?> deleteProduct(Long id)
+    {
+        Optional<Product> result=productRepos.findById(id);
+        if(result.isEmpty())
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Bad id value");
+
+        productRepos.deleteById(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body("Product successufly deleted");
     }
 }

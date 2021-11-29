@@ -2,10 +2,7 @@ package tn.esb.bis.ecommercebackend.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tn.esb.bis.ecommercebackend.Services.ProductService;
 
 @RestController
@@ -22,5 +19,13 @@ public class productController {
     public ResponseEntity<?> allProducts()
     {
         return productServ.getAllProducts();
+    }
+    @GetMapping("get-product/{id}")
+    //{id} est une variable passée comme paramètre dans le path
+    //@PathVariable -->cette annotation informe le serveur qu'il trouvera
+    //la valeur de l'id dans le path
+    public ResponseEntity<?> productById(@PathVariable Long id)
+    {
+        return productServ.getProductById(id);
     }
 }
