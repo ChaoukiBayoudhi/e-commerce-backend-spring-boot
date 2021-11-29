@@ -62,4 +62,26 @@ public class ProductService {
         return ResponseEntity.status(HttpStatus.ACCEPTED)
                 .body("Product successufly deleted");
     }
+
+    public ResponseEntity<?> updateProduct(Long id,Product pNew)
+    {
+        //verifier que le produit dont l'id est passé en paramètre existe
+        Optional<Product> result=productRepos.findById(id);
+        if(result.isEmpty())
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Bad id value");
+        //recuperer la reference du produit
+        Product pOld= result.get();
+        //mettre à jour toutes les colonnes de produit
+        pOld.setLabel(pNew.getLabel());
+        pOld.setDescription(pNew.getDescription());
+        pOld.setPrice(pNew.getPrice());
+        pOld.setEndConsumeDate(pNew.getEndConsumeDate());
+        pOld.setFabricationDate(pNew.getFabricationDate());
+        pOld.setPhoto(pNew.getPhoto());
+        //appeler la méthode save() pour mettre à jour le produit dans la base de données
+        Product p1=productRepos.save(pOld);
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body(p1);
+    }
 }

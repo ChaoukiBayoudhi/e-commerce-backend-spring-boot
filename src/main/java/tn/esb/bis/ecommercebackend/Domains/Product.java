@@ -30,7 +30,7 @@ public class Product {
     @Column(unique = true,length=100)
     private String label;
     @NonNull
-    @Column(unique = true,precision=3)
+    @Column(precision=3)
     //price est une colonne sans repetition et avec 3 chiffres après la virgule
     private double price;
     @NonNull
