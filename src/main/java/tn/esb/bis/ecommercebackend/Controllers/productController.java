@@ -16,7 +16,7 @@ public class productController {
     private ProductService productServ;
     @GetMapping("/all")
     //url pour recuperer tous les produits dans un front-end(Angular, reactjs,...)
-    // ="http://localhost:8080/products/all
+    // ="http://localhost:8080/products/all"
     //ou bien
    // @RequestMapping(value="/all",method= RequestMethod.GET)
     public ResponseEntity<?> allProducts()

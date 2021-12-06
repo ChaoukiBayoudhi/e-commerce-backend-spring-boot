@@ -1,5 +1,6 @@
 package tn.esb.bis.ecommercebackend.Domains;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,9 +36,11 @@ public class Product {
     private double price;
     @NonNull
     @EqualsAndHashCode.Include
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate endConsumeDate;
     @NonNull
     @EqualsAndHashCode.Include
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate fabricationDate;
     private String description;
     private int quantity;
